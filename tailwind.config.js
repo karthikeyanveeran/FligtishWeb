@@ -1,0 +1,118 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#EBF8FF',
+          100: '#D1EEFC',
+          200: '#A7D8F0',
+          300: '#7CC1E4',
+          400: '#55ABD8',
+          500: '#3094C7',
+          600: '#1A365D', // main primary
+          700: '#144870',
+          800: '#0D3A5C',
+          900: '#072B46',
+        },
+        secondary: {
+          50: '#F5F7FA',
+          100: '#E4E7EB',
+          200: '#CBD2D9',
+          300: '#9AA5B1',
+          400: '#7B8794',
+          500: '#616E7C',
+          600: '#52606D',
+          700: '#3E4C59',
+          800: '#323F4B',
+          900: '#1F2933',
+        },
+        accent: {
+          50: '#FFF9E6',
+          100: '#FFF0BF',
+          200: '#FFE799',
+          300: '#FFDB72',
+          400: '#FFD04C',
+          500: '#DBA111', // main accent gold
+          600: '#B78A00',
+          700: '#8C6B00',
+          800: '#624B00',
+          900: '#3D2E00',
+        },
+        success: {
+          50: '#E3F9E5',
+          100: '#C1EAC5',
+          200: '#A3D9A5',
+          300: '#7BC47F',
+          400: '#57AE5B',
+          500: '#3F9142',
+          600: '#2F8132',
+          700: '#207227',
+          800: '#0E5814',
+          900: '#05400A',
+        },
+        warning: {
+          50: '#FFFAEB',
+          100: '#FEF0C7',
+          200: '#FEDF89',
+          300: '#FEC84B',
+          400: '#FDB022',
+          500: '#F79009',
+          600: '#DC6803',
+          700: '#B35309',
+          800: '#8A4009',
+          900: '#662E0A',
+        },
+        error: {
+          50: '#FEE7EF',
+          100: '#FDD0DF',
+          200: '#FAA8C5',
+          300: '#F67FAC',
+          400: '#F05D9A',
+          500: '#E74A8B',
+          600: '#D63384',
+          700: '#C22073',
+          800: '#9D105C',
+          900: '#700940',
+        },
+      },
+      fontFamily: {
+        sans: [
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica Neue',
+          'Arial',
+          'sans-serif',
+        ],
+      },
+      animation: {
+        'fade-in': 'fadeIn 0.5s ease-in-out',
+        'slide-up': 'slideUp 0.5s ease-in-out',
+        'slide-down': 'slideDown 0.5s ease-in-out',
+      },
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        slideUp: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(-20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+      },
+      boxShadow: {
+        card: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+        'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+      },
+    },
+  },
+  plugins: [],
+};

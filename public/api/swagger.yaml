@@ -1,0 +1,206 @@
+openapi: 3.0.3
+info:
+  title: FLIGHTISH GLOBAL Hotel Booking API
+  description: Enterprise-grade API for hotel search, booking, and management operations
+  version: 2.0.0
+  contact:
+    name: FLIGHTISH GLOBAL API Support
+    email: support@flightishglobal.com
+    url: https://www.flightishglobal.com
+  license:
+    name: Proprietary
+    url: https://www.flightishglobal.com/terms
+
+servers:
+  - url: https://api.flightishglobal.com
+    description: Production server
+  - url: https://sandbox.flightishglobal.com
+    description: Sandbox server for testing
+  - url: https://staging.flightishglobal.com
+    description: Staging server
+
+tags:
+  - name: Authentication
+    description: API key management
+  - name: Reference Data
+    description: Static reference data
+  - name: Hotel Search
+    description: Search hotel availability
+  - name: Hotel Booking
+    description: Book and manage reservations
+  - name: Configuration
+    description: API configuration
+
+paths:
+  /api-configuration:
+    get:
+      tags:
+        - Configuration
+      summary: Get API Configuration
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Configuration retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKey:
+                    type: string
+                  whitelistIPs:
+                    type: array
+                    items:
+                      type: string
+                  hotelVersion:
+                    type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /hms/v1/hotel-searchquery-list:
+    post:
+      tags:
+        - Hotel Search
+      summary: Search Hotels
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HotelSearchRequest'
+      responses:
+        '200':
+          description: Search results
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HotelSearchResponse'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /hms/v1/hotel-book:
+    post:
+      tags:
+        - Hotel Booking
+      summary: Book a Hotel
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HotelBookingRequest'
+      responses:
+        '201':
+          description: Booking created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookingConfirmation'
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+  /reference/nationalities:
+    get:
+      tags:
+        - Reference Data
+      summary: Get Nationalities
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Nationalities list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Nationality'
+
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: apikey
+
+  schemas:
+    HotelSearchRequest:
+      type: object
+      required:
+        - checkinDate
+        - checkoutDate
+        - roomInfo
+      properties:
+        checkinDate:
+          type: string
+          format: date
+        checkoutDate:
+          type: string
+          format: date
+        roomInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              numberOfAdults:
+                type: integer
+              numberOfChild:
+                type: integer
+
+    HotelSearchResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        hotels:
+          type: array
+          items:
+            type: object
+
+    HotelBookingRequest:
+      type: object
+      required:
+        - hotelId
+        - roomId
+        - guestInfo
+      properties:
+        hotelId:
+          type: string
+        roomId:
+          type: string
+        guestInfo:
+          type: object
+
+    BookingConfirmation:
+      type: object
+      properties:
+        bookingId:
+          type: string
+        confirmationNumber:
+          type: string
+        status:
+          type: string
+
+    Nationality:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+
+  responses:
+    UnauthorizedError:
+      description: Invalid API key
+    BadRequestError:
+      description: Invalid request
