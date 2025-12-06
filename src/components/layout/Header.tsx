@@ -19,48 +19,73 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
   const [regionMenuOpen, setRegionMenuOpen] = React.useState(false);
   const [currencyMenuOpen, setCurrencyMenuOpen] = React.useState(false);
 
-  const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Insurance', path: '/insurance' },
-    { name: 'Loans', path: '/loans' },
-    { name: 'Documents', path: '/documents' },
-    { name: 'API Solutions', path: '/api-solutions' },
-    { name: 'AI Solutions', path: '/ai-solutions' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'About Us', path: '/about' },
-  ];
+  const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null);
+
+  const navigation = {
+    solutions: [
+      { name: 'Travel Insurance', path: '/insurance' },
+      { name: 'Travel Loans', path: '/loans' },
+      { name: 'Document Wallet', path: '/documents' },
+      { name: 'Airline Solutions', path: '/airline-solutions' },
+    ],
+    technology: [
+      { name: 'API Solutions', path: '/api-solutions' },
+      { name: 'AI Solutions', path: '/ai-solutions' },
+    ],
+    developers: [
+      { name: 'API Documentation', path: '/api-docs' },
+      { name: 'SDK Guide', path: '/sdk-guide' },
+      { name: 'Integration Guide', path: '/integration-guide' },
+      { name: 'API Status', path: '/api-status' },
+      { name: 'Changelog', path: '/api-changelog' },
+    ],
+    company: [
+      { name: 'About Us', path: '/about' },
+      { name: 'Careers', path: '/careers' },
+      { name: 'Manpower Augmentation', path: '/manpower' },
+      { name: 'Contact', path: '/contact' },
+    ],
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-primary-200 bg-white/90 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center">
-              <Logo className="h-10 w-auto" />
-              <div className="ml-2 hidden sm:block">
-                <span className="text-lg font-bold text-primary-800">
-                  LA FLIGHTISH GLOBAL
-                </span>
-                <span className="block text-xs text-accent-500">EST. 2018</span>
-              </div>
+            <Link to="/" className="flex items-center space-x-3">
+              <img src="/src/assets/Logo 2.png" alt="LA FLIGHTISH GLOBAL" className="h-10 w-auto" />
+              <span className="text-xl font-bold text-primary-800 hidden sm:block">
+                LA FLIGHTISH GLOBAL
+              </span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex md:items-center md:space-x-6">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={cn(
-                  "text-sm font-medium transition-colors hover:text-primary-600",
-                  location.pathname === item.path
-                    ? "text-primary-600"
-                    : "text-secondary-600"
-                )}
+          <nav className="hidden lg:flex lg:items-center lg:space-x-8">
+            {Object.entries(navigation).map(([key, items]) => (
+              <div
+                key={key}
+                className="relative"
+                onMouseEnter={() => setActiveDropdown(key)}
+                onMouseLeave={() => setActiveDropdown(null)}
               >
-                {item.name}
-              </Link>
+                <button className="text-sm font-medium text-secondary-700 hover:text-primary-600 capitalize">
+                  {key}
+                </button>
+                {activeDropdown === key && (
+                  <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                    {items.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className="block px-4 py-2 text-sm text-secondary-700 hover:bg-primary-50 hover:text-primary-600"
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </nav>
 
