@@ -45,6 +45,7 @@ function App() {
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/api-docs" element={<ApiDocumentationPage />} />
+            <Route path="/documentation" element={<ApiDocumentationPage />} />
             <Route path="/api-changelog" element={<ApiChangelogPage />} />
             <Route path="/api-status" element={<ApiStatusPage />} />
             <Route path="/sdk-guide" element={<SdkGuidePage />} />
