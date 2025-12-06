@@ -67,17 +67,14 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
     <header className="sticky top-0 z-50 w-full border-b border-primary-200 bg-white/90 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-3">
+          <div className="flex-1">
+            <Link to="/">
               <img src={logoImage} alt="LA FLIGHTISH GLOBAL" className="h-10 w-auto" />
-              <span className="text-xl font-bold text-primary-800 hidden sm:block">
-                LA FLIGHTISH GLOBAL
-              </span>
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex lg:items-center lg:space-x-8">
+          {/* Desktop Navigation - Centered */}
+          <nav className="hidden lg:flex lg:items-center lg:space-x-8 flex-1 justify-center">
             {Object.entries(navigation).map(([key, items]) => (
               <div
                 key={key}
@@ -109,7 +106,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
             ))}
           </nav>
 
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 flex-1 justify-end">
             {/* Mobile menu button */}
             <button
               onClick={toggleMobileMenu}
