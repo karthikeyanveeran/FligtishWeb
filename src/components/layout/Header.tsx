@@ -21,6 +21,21 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
   const [currencyMenuOpen, setCurrencyMenuOpen] = React.useState(false);
 
   const [activeDropdown, setActiveDropdown] = React.useState<string | null>(null);
+  const closeTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseEnter = (key: string) => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    setActiveDropdown(key);
+  };
+
+  const handleMouseLeave = () => {
+    closeTimeoutRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 200);
+  };
 
   const navigation = {
     solutions: [
@@ -67,14 +82,18 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
               <div
                 key={key}
                 className="relative"
-                onMouseEnter={() => setActiveDropdown(key)}
-                onMouseLeave={() => setActiveDropdown(null)}
+                onMouseEnter={() => handleMouseEnter(key)}
+                onMouseLeave={handleMouseLeave}
               >
                 <button className="text-sm font-medium text-secondary-700 hover:text-primary-600 capitalize">
                   {key}
                 </button>
                 {activeDropdown === key && (
-                  <div className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2">
+                  <div 
+                    className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+                    onMouseEnter={() => handleMouseEnter(key)}
+                    onMouseLeave={handleMouseLeave}
+                  >
                     {items.map((item) => (
                       <Link
                         key={item.path}
