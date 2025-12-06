@@ -18,6 +18,7 @@ import { ManpowerPage } from './pages/ManpowerPage';
 import { TermsPage } from './pages/TermsPage';
 import { PrivacyPage } from './pages/PrivacyPage';
 import { ApiDocumentationPage } from './pages/ApiDocumentationPage';
+import { ApiDocsPage } from './pages/ApiDocsPage';
 import { ApiChangelogPage } from './pages/ApiChangelogPage';
 import { ApiStatusPage } from './pages/ApiStatusPage';
 import { SdkGuidePage } from './pages/SdkGuidePage';
@@ -48,8 +49,9 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/terms" element={<TermsPage />} />
             <Route path="/privacy" element={<PrivacyPage />} />
-            <Route path="/api-docs" element={<ApiDocumentationPage />} />
+            <Route path="/api-docs" element={<ApiDocsPage />} />
             <Route path="/documentation" element={<ApiDocumentationPage />} />
+            <Route path="/swagger" element={<ApiDocsPage />} />
             <Route path="/api-changelog" element={<ApiChangelogPage />} />
             <Route path="/api-status" element={<ApiStatusPage />} />
             <Route path="/sdk-guide" element={<SdkGuidePage />} />
