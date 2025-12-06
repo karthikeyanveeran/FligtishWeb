@@ -1,8 +1,8 @@
 openapi: 3.0.3
 info:
-  title: FLIGHTISH GLOBAL Hotel Booking API
-  description: Enterprise-grade API for hotel search, booking, and management operations
-  version: 2.0.0
+  title: FLIGHTISH GLOBAL Travel Services API
+  description: Enterprise-grade API for flights, hotels, insurance, loans, and travel management
+  version: 3.0.0
   contact:
     name: FLIGHTISH GLOBAL API Support
     email: support@flightishglobal.com
@@ -21,17 +21,217 @@ servers:
 
 tags:
   - name: Authentication
-    description: API key management
+    description: API key and OAuth 2.0 management
+  - name: Flights
+    description: Flight search, booking, and management
+  - name: Hotels
+    description: Hotel search, booking, and reservations
+  - name: Insurance
+    description: Travel insurance quotes and policies
+  - name: Loans
+    description: Travel loan applications and management
+  - name: Documents
+    description: Travel document storage and management
+  - name: AI Services
+    description: AI-powered recommendations and analytics
+  - name: Payments
+    description: Payment processing and refunds
   - name: Reference Data
     description: Static reference data
-  - name: Hotel Search
-    description: Search hotel availability
-  - name: Hotel Booking
-    description: Book and manage reservations
   - name: Configuration
     description: API configuration
 
 paths:
+  /v3/auth/token:
+    post:
+      tags:
+        - Authentication
+      summary: Get OAuth 2.0 Access Token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                client_id:
+                  type: string
+                client_secret:
+                  type: string
+                grant_type:
+                  type: string
+                  enum: [client_credentials]
+      responses:
+        '200':
+          description: Token generated
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                  token_type:
+                    type: string
+                  expires_in:
+                    type: integer
+
+  /v3/flights/search:
+    post:
+      tags:
+        - Flights
+      summary: Search Flights
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                origin:
+                  type: string
+                destination:
+                  type: string
+                departureDate:
+                  type: string
+                  format: date
+                returnDate:
+                  type: string
+                  format: date
+                passengers:
+                  type: integer
+      responses:
+        '200':
+          description: Flight results
+
+  /v3/flights/book:
+    post:
+      tags:
+        - Flights
+      summary: Book Flight
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+      responses:
+        '201':
+          description: Booking confirmed
+
+  /v3/insurance/quotes:
+    post:
+      tags:
+        - Insurance
+      summary: Get Insurance Quotes
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tripType:
+                  type: string
+                destination:
+                  type: string
+                departureDate:
+                  type: string
+                  format: date
+                returnDate:
+                  type: string
+                  format: date
+                travelers:
+                  type: array
+                  items:
+                    type: object
+      responses:
+        '200':
+          description: Insurance quotes
+
+  /v3/insurance/policies:
+    post:
+      tags:
+        - Insurance
+      summary: Purchase Insurance Policy
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '201':
+          description: Policy created
+
+  /v3/loans/applications:
+    post:
+      tags:
+        - Loans
+      summary: Submit Loan Application
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '201':
+          description: Application submitted
+
+  /v3/loans/status/{id}:
+    get:
+      tags:
+        - Loans
+      summary: Check Loan Status
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Loan status
+
+  /v3/documents/upload:
+    post:
+      tags:
+        - Documents
+      summary: Upload Travel Document
+      security:
+        - ApiKeyAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '201':
+          description: Document uploaded
+
+  /v3/documents/{id}:
+    get:
+      tags:
+        - Documents
+      summary: Get Document
+      security:
+        - ApiKeyAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Document retrieved
+
   /api-configuration:
     get:
       tags:
