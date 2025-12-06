@@ -156,15 +156,15 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
-                <Link to="/press" className="text-primary-200 hover:text-white transition-colors flex items-center">
+                <Link to="/manpower" className="text-primary-200 hover:text-white transition-colors flex items-center">
                   <span className="w-1.5 h-1.5 bg-primary-400 rounded-full mr-2"></span>
-                  Press Room
+                  Manpower Services
                 </Link>
               </li>
               <li>
-                <Link to="/blog" className="text-primary-200 hover:text-white transition-colors flex items-center">
+                <Link to="/airline-solutions" className="text-primary-200 hover:text-white transition-colors flex items-center">
                   <span className="w-1.5 h-1.5 bg-primary-400 rounded-full mr-2"></span>
-                  Blog
+                  Airline Solutions
                 </Link>
               </li>
             </ul>
@@ -212,14 +212,11 @@ export const Footer: React.FC = () => {
               <Link to="/terms" className="text-sm text-primary-200 hover:text-white transition-colors">
                 Terms of Service
               </Link>
-              <Link to="/cookies" className="text-sm text-primary-200 hover:text-white transition-colors">
-                Cookie Policy
+              <Link to="/api-docs" className="text-sm text-primary-200 hover:text-white transition-colors">
+                API Documentation
               </Link>
-              <Link to="/sitemap" className="text-sm text-primary-200 hover:text-white transition-colors">
-                Sitemap
-              </Link>
-              <Link to="/accessibility" className="text-sm text-primary-200 hover:text-white transition-colors">
-                Accessibility
+              <Link to="/api-status" className="text-sm text-primary-200 hover:text-white transition-colors">
+                API Status
               </Link>
             </div>
             <div className="flex items-center space-x-2">
