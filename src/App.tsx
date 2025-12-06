@@ -1,6 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { Analytics } from './components/Analytics';
 import { Layout } from './components/layout/Layout';
 import { HomePage } from './pages/HomePage';
 import { FlightBookingPage } from './pages/FlightBookingPage';
@@ -28,6 +29,7 @@ import { CurrencyProvider } from './context/CurrencyContext';
 function App() {
   return (
     <ErrorBoundary>
+      <Analytics />
       <RegionProvider>
         <CurrencyProvider>
           <Layout>

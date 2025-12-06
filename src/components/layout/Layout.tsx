@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Header } from './Header';
 import { Footer } from './Footer';
 import { MobileMenu } from './MobileMenu';
+import { Breadcrumbs } from '../Breadcrumbs';
 import { AnimatePresence } from 'framer-motion';
 
 interface LayoutProps {
@@ -22,6 +23,8 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
       <AnimatePresence>
         {mobileMenuOpen && <MobileMenu onClose={() => setMobileMenuOpen(false)} />}
       </AnimatePresence>
+      
+      <Breadcrumbs />
       
       <main className="flex-grow">
         {children}
