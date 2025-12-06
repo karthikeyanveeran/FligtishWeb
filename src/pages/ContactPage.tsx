@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { MapPin, Mail, Send, Check, Calendar, Users, Briefcase, MessageSquare } from 'lucide-react';
+import { MapPin, Mail, Send, Check, Calendar, Users, Briefcase, MessageSquare, CheckCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/Card';
 import { Input } from '../components/ui/Input';
 import { Textarea } from '../components/ui/Textarea';
@@ -96,22 +96,89 @@ export const ContactPage: React.FC = () => {
     <div className="bg-gradient-to-b from-gray-50 to-white py-12 md:py-20 enterprise-section">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-6"
+          >
+            <span className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              Trusted by 500+ Airlines & Travel Companies Worldwide
+            </span>
+          </motion.div>
           <motion.h1 
-            className="text-3xl md:text-5xl font-bold gradient-text mb-4"
+            className="text-4xl md:text-6xl font-bold gradient-text mb-6"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            Enterprise Solutions
+            Let's Build Something Extraordinary
           </motion.h1>
           <motion.p 
-            className="text-lg text-secondary-600 max-w-2xl mx-auto"
+            className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            Connect with our enterprise team to discuss AI solutions, API integrations, and digital transformation for your organization.
+            Partner with our enterprise team to transform your travel business with AI-powered solutions, API integrations, and digital innovation.
           </motion.p>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="flex flex-wrap justify-center gap-8 text-sm"
+          >
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-success-600" />
+              <span className="text-secondary-700"><strong>$5B+</strong> Annual Savings Generated</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-success-600" />
+              <span className="text-secondary-700"><strong>99.99%</strong> System Uptime SLA</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-success-600" />
+              <span className="text-secondary-700"><strong>24/7</strong> Enterprise Support</span>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Enterprise Contact Options */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <Card className="text-center hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="h-8 w-8 text-primary-600" />
+                </div>
+                <h3 className="text-xl font-bold text-primary-800 mb-2">Enterprise Sales</h3>
+                <p className="text-secondary-600 mb-4">For organizations with 500+ employees</p>
+                <p className="text-sm text-primary-600 font-semibold">Response time: &lt;4 hours</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-accent-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Briefcase className="h-8 w-8 text-accent-600" />
+                </div>
+                <h3 className="text-xl font-bold text-primary-800 mb-2">Partnership Inquiries</h3>
+                <p className="text-secondary-600 mb-4">Strategic partnerships & integrations</p>
+                <p className="text-sm text-accent-600 font-semibold">Response time: &lt;24 hours</p>
+              </CardContent>
+            </Card>
+
+            <Card className="text-center hover:shadow-xl transition-shadow cursor-pointer border-2 border-transparent hover:border-primary-500">
+              <CardContent className="p-8">
+                <div className="w-16 h-16 bg-success-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MessageSquare className="h-8 w-8 text-success-600" />
+                </div>
+                <h3 className="text-xl font-bold text-primary-800 mb-2">Technical Support</h3>
+                <p className="text-secondary-600 mb-4">24/7 support for existing customers</p>
+                <p className="text-sm text-success-600 font-semibold">Response time: &lt;15 minutes</p>
+              </CardContent>
+            </Card>
+          </div>
         </div>
 
         {/* Office Selector */}
@@ -210,10 +277,15 @@ export const ContactPage: React.FC = () => {
           >
             <Card className="overflow-hidden card-enterprise">
               <CardHeader className="bg-gradient-to-r from-primary-700 to-accent-700 text-white">
-                <CardTitle className="text-2xl">Send Us a Message</CardTitle>
+                <CardTitle className="text-2xl">Get Started with Enterprise Solutions</CardTitle>
                 <p className="text-primary-100 mt-2">
-                  Fill out the form below and our enterprise team will get back to you within 24 hours.
+                  Our enterprise specialists typically respond within 4 hours. For urgent inquiries, call our 24/7 hotline: <strong>+1 (800) 555-0199</strong>
                 </p>
+                <div className="flex flex-wrap gap-3 mt-4">
+                  <span className="text-xs bg-white/20 px-3 py-1 rounded-full">SOC2 Certified</span>
+                  <span className="text-xs bg-white/20 px-3 py-1 rounded-full">GDPR Compliant</span>
+                  <span className="text-xs bg-white/20 px-3 py-1 rounded-full">ISO 27001</span>
+                </div>
               </CardHeader>
               <CardContent className="p-6">
                 {isSubmitted ? (
@@ -329,6 +401,38 @@ export const ContactPage: React.FC = () => {
                 <div className="bg-white/70 backdrop-blur-sm p-5 rounded-lg shadow-md border border-gray-100">
                   <h4 className="font-medium text-primary-700">Do you offer enterprise SLAs?</h4>
                   <p className="text-secondary-600 text-sm mt-1">Yes, we provide custom SLAs for enterprise clients with 24/7 dedicated support options. Contact our <Link to="/api-solutions" className="text-primary-600 hover:underline">Enterprise Team</Link> for details.</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Enterprise Trust Indicators */}
+            <div className="mt-12 bg-gradient-to-r from-primary-50 to-accent-50 rounded-xl p-8">
+              <h3 className="text-2xl font-bold text-primary-800 mb-6 text-center">Why Leading Enterprises Choose Us</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-600 mb-2">500+</div>
+                  <p className="text-secondary-600">Airlines & Travel Companies</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-600 mb-2">$5B+</div>
+                  <p className="text-secondary-600">Annual Savings Generated</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-600 mb-2">99.99%</div>
+                  <p className="text-secondary-600">System Uptime SLA</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-primary-600 mb-2">24/7</div>
+                  <p className="text-secondary-600">Enterprise Support</p>
+                </div>
+              </div>
+              <div className="mt-8 pt-6 border-t border-primary-200">
+                <p className="text-center text-secondary-600 mb-4">Trusted by industry leaders:</p>
+                <div className="flex flex-wrap justify-center gap-8 items-center">
+                  <div className="text-secondary-400 font-semibold">Major Airlines</div>
+                  <div className="text-secondary-400 font-semibold">Global Travel Agencies</div>
+                  <div className="text-secondary-400 font-semibold">Insurance Providers</div>
+                  <div className="text-secondary-400 font-semibold">Financial Institutions</div>
                 </div>
               </div>
             </div>
