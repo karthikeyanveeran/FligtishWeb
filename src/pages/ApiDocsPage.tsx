@@ -8,12 +8,15 @@ import { SwaggerUI } from '../components/SwaggerUI';
 
 export const ApiDocsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('swagger');
+  const [apiVersion, setApiVersion] = useState('v3');
 
   const sdks = [
-    { name: 'Python', icon: '🐍', version: '2.0.0', download: '/sdks/flightish-python-2.0.0.tar.gz' },
-    { name: 'JavaScript/Node.js', icon: '📦', version: '2.0.0', download: '/sdks/flightish-js-2.0.0.tgz' },
-    { name: 'PHP', icon: '🐘', version: '2.0.0', download: '/sdks/flightish-php-2.0.0.zip' },
-    { name: 'Java', icon: '☕', version: '2.0.0', download: '/sdks/flightish-java-2.0.0.jar' },
+    { name: 'Python', icon: '🐍', version: '3.0.0', download: '/sdks/flightish-python-3.0.0.tar.gz' },
+    { name: 'JavaScript/Node.js', icon: '📦', version: '3.0.0', download: '/sdks/flightish-js-3.0.0.tgz' },
+    { name: 'PHP', icon: '🐘', version: '3.0.0', download: '/sdks/flightish-php-3.0.0.zip' },
+    { name: 'Java', icon: '☕', version: '3.0.0', download: '/sdks/flightish-java-3.0.0.jar' },
+    { name: 'Go', icon: '🔷', version: '3.0.0', download: '/sdks/flightish-go-3.0.0.tar.gz' },
+    { name: 'Ruby', icon: '💎', version: '3.0.0', download: '/sdks/flightish-ruby-3.0.0.gem' },
   ];
 
   const environments = [
@@ -38,11 +41,18 @@ export const ApiDocsPage: React.FC = () => {
   ];
 
   const webhookEvents = [
-    { event: 'booking.created', description: 'Triggered when a new booking is created' },
-    { event: 'booking.confirmed', description: 'Triggered when booking is confirmed' },
-    { event: 'booking.cancelled', description: 'Triggered when booking is cancelled' },
-    { event: 'payment.received', description: 'Triggered when payment is received' },
-    { event: 'hotel.updated', description: 'Triggered when hotel information is updated' }
+    { event: 'booking.created', description: 'Triggered when a new booking is created', category: 'Booking' },
+    { event: 'booking.confirmed', description: 'Triggered when booking is confirmed', category: 'Booking' },
+    { event: 'booking.cancelled', description: 'Triggered when booking is cancelled', category: 'Booking' },
+    { event: 'booking.modified', description: 'Triggered when booking details are modified', category: 'Booking' },
+    { event: 'payment.received', description: 'Triggered when payment is received', category: 'Payment' },
+    { event: 'payment.failed', description: 'Triggered when payment fails', category: 'Payment' },
+    { event: 'payment.refunded', description: 'Triggered when payment is refunded', category: 'Payment' },
+    { event: 'hotel.updated', description: 'Triggered when hotel information is updated', category: 'Hotel' },
+    { event: 'hotel.availability.changed', description: 'Triggered when room availability changes', category: 'Hotel' },
+    { event: 'insurance.purchased', description: 'Triggered when travel insurance is purchased', category: 'Insurance' },
+    { event: 'loan.approved', description: 'Triggered when travel loan is approved', category: 'Loan' },
+    { event: 'document.uploaded', description: 'Triggered when travel document is uploaded', category: 'Document' }
   ];
 
   return (
@@ -62,7 +72,18 @@ export const ApiDocsPage: React.FC = () => {
           >
             <div className="flex items-center gap-3 mb-4">
               <BookOpen className="h-8 w-8" />
-              <span className="text-sm font-semibold text-primary-200">API v2.0.0</span>
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold text-primary-200">API Version:</span>
+                <select 
+                  value={apiVersion} 
+                  onChange={(e) => setApiVersion(e.target.value)}
+                  className="bg-primary-600 text-white px-3 py-1 rounded border border-primary-500 text-sm font-semibold"
+                >
+                  <option value="v3">v3.0.0 (Latest)</option>
+                  <option value="v2">v2.5.0</option>
+                  <option value="v1">v1.8.0 (Legacy)</option>
+                </select>
+              </div>
             </div>
             <h1 className="text-4xl md:text-5xl font-bold mb-4">
               API Documentation
@@ -89,7 +110,7 @@ export const ApiDocsPage: React.FC = () => {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
-              { label: 'API Endpoints', value: '15+' },
+              { label: 'API Endpoints', value: '45+' },
               { label: 'Response Time', value: '<100ms' },
               { label: 'Uptime SLA', value: '99.99%' },
               { label: 'Rate Limit', value: '10K/min' }
@@ -106,10 +127,32 @@ export const ApiDocsPage: React.FC = () => {
       {/* Main Content */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Version Info Banner */}
+          <div className="bg-gradient-to-r from-primary-50 to-accent-50 border border-primary-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="font-semibold text-primary-900">API Version {apiVersion}</h3>
+                <p className="text-sm text-primary-700 mt-1">
+                  {apiVersion === 'v3' && 'Latest stable release with AI-powered features, enhanced security, and GraphQL support'}
+                  {apiVersion === 'v2' && 'Stable release with REST API, webhooks, and real-time updates'}
+                  {apiVersion === 'v1' && 'Legacy version - Migration to v3 recommended by Q4 2025'}
+                </p>
+              </div>
+              <span className={`px-3 py-1 rounded-full text-xs font-bold ${
+                apiVersion === 'v3' ? 'bg-success-100 text-success-800' :
+                apiVersion === 'v2' ? 'bg-info-100 text-info-800' :
+                'bg-warning-100 text-warning-800'
+              }`}>
+                {apiVersion === 'v3' ? 'LATEST' : apiVersion === 'v2' ? 'STABLE' : 'LEGACY'}
+              </span>
+            </div>
+          </div>
+
           {/* Tabs */}
           <div className="flex flex-wrap gap-2 mb-8 border-b border-gray-200">
             {[
               { id: 'swagger', label: 'Interactive API', icon: <Code className="h-4 w-4" /> },
+              { id: 'versions', label: 'API Versions', icon: <GitBranch className="h-4 w-4" /> },
               { id: 'environments', label: 'Environments', icon: <Server className="h-4 w-4" /> },
               { id: 'sdks', label: 'SDKs', icon: <Package className="h-4 w-4" /> },
               { id: 'webhooks', label: 'Webhooks', icon: <Zap className="h-4 w-4" /> }
@@ -128,6 +171,162 @@ export const ApiDocsPage: React.FC = () => {
               </button>
             ))}
           </div>
+
+          {/* API Versions Tab */}
+          {activeTab === 'versions' && (
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <GitBranch className="h-5 w-5 text-primary-600" />
+                    API Version Comparison
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b-2 border-gray-200">
+                          <th className="text-left py-3 px-4 font-semibold">Feature</th>
+                          <th className="text-center py-3 px-4 font-semibold">v3.0.0</th>
+                          <th className="text-center py-3 px-4 font-semibold">v2.5.0</th>
+                          <th className="text-center py-3 px-4 font-semibold">v1.8.0</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {[
+                          { feature: 'REST API', v3: true, v2: true, v1: true },
+                          { feature: 'GraphQL API', v3: true, v2: false, v1: false },
+                          { feature: 'AI-Powered Search', v3: true, v2: false, v1: false },
+                          { feature: 'Real-time Webhooks', v3: true, v2: true, v1: false },
+                          { feature: 'Batch Operations', v3: true, v2: true, v1: false },
+                          { feature: 'Rate Limit', v3: '10K/min', v2: '5K/min', v1: '1K/min' },
+                          { feature: 'Response Time', v3: '<50ms', v2: '<100ms', v1: '<200ms' },
+                          { feature: 'OAuth 2.0', v3: true, v2: true, v1: false },
+                          { feature: 'API Key Auth', v3: true, v2: true, v1: true },
+                          { feature: 'Pagination', v3: 'Cursor-based', v2: 'Offset-based', v1: 'Page-based' },
+                        ].map((row, i) => (
+                          <tr key={i} className="border-b border-gray-100">
+                            <td className="py-3 px-4 font-medium">{row.feature}</td>
+                            <td className="py-3 px-4 text-center">
+                              {typeof row.v3 === 'boolean' ? (
+                                row.v3 ? <span className="text-success-600 text-xl">✓</span> : <span className="text-gray-300 text-xl">✗</span>
+                              ) : (
+                                <code className="text-xs bg-success-50 text-success-700 px-2 py-1 rounded">{row.v3}</code>
+                              )}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              {typeof row.v2 === 'boolean' ? (
+                                row.v2 ? <span className="text-success-600 text-xl">✓</span> : <span className="text-gray-300 text-xl">✗</span>
+                              ) : (
+                                <code className="text-xs bg-info-50 text-info-700 px-2 py-1 rounded">{row.v2}</code>
+                              )}
+                            </td>
+                            <td className="py-3 px-4 text-center">
+                              {typeof row.v1 === 'boolean' ? (
+                                row.v1 ? <span className="text-success-600 text-xl">✓</span> : <span className="text-gray-300 text-xl">✗</span>
+                              ) : (
+                                <code className="text-xs bg-warning-50 text-warning-700 px-2 py-1 rounded">{row.v1}</code>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-bold text-primary-800">v3.0.0</h3>
+                      <span className="bg-success-100 text-success-800 text-xs font-bold px-2 py-1 rounded">LATEST</span>
+                    </div>
+                    <p className="text-sm text-secondary-600 mb-4">Released: January 2025</p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="text-success-600 mt-0.5">•</span>
+                        <span>GraphQL API support</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-success-600 mt-0.5">•</span>
+                        <span>AI-powered recommendations</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-success-600 mt-0.5">•</span>
+                        <span>Enhanced security (OAuth 2.1)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-success-600 mt-0.5">•</span>
+                        <span>Real-time data streaming</span>
+                      </li>
+                    </ul>
+                    <Button variant="primary" fullWidth className="mt-4">Use v3</Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-bold text-primary-800">v2.5.0</h3>
+                      <span className="bg-info-100 text-info-800 text-xs font-bold px-2 py-1 rounded">STABLE</span>
+                    </div>
+                    <p className="text-sm text-secondary-600 mb-4">Released: June 2024</p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="text-info-600 mt-0.5">•</span>
+                        <span>REST API with webhooks</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-info-600 mt-0.5">•</span>
+                        <span>Batch operations</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-info-600 mt-0.5">•</span>
+                        <span>OAuth 2.0 authentication</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-info-600 mt-0.5">•</span>
+                        <span>Advanced filtering</span>
+                      </li>
+                    </ul>
+                    <Button variant="outline" fullWidth className="mt-4">Use v2</Button>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-bold text-primary-800">v1.8.0</h3>
+                      <span className="bg-warning-100 text-warning-800 text-xs font-bold px-2 py-1 rounded">LEGACY</span>
+                    </div>
+                    <p className="text-sm text-secondary-600 mb-4">Released: March 2023</p>
+                    <ul className="space-y-2 text-sm">
+                      <li className="flex items-start gap-2">
+                        <span className="text-warning-600 mt-0.5">•</span>
+                        <span>Basic REST API</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-warning-600 mt-0.5">•</span>
+                        <span>API key authentication</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-warning-600 mt-0.5">•</span>
+                        <span>Limited rate limits</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-warning-600 mt-0.5">•</span>
+                        <span>EOL: Q4 2025</span>
+                      </li>
+                    </ul>
+                    <Button variant="outline" fullWidth className="mt-4" disabled>Deprecated</Button>
+                  </CardContent>
+                </Card>
+              </div>
+            </motion.div>
+          )}
 
           {/* Swagger Tab */}
           {activeTab === 'swagger' && (
@@ -273,11 +472,14 @@ export const ApiDocsPage: React.FC = () => {
                     {webhookEvents.map((webhook, i) => (
                       <div key={i} className="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition-colors">
                         <div className="flex items-start justify-between">
-                          <div>
-                            <h4 className="font-mono font-semibold text-primary-800">{webhook.event}</h4>
-                            <p className="text-secondary-600 text-sm mt-1">{webhook.description}</p>
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-1">
+                              <h4 className="font-mono font-semibold text-primary-800">{webhook.event}</h4>
+                              <span className="text-xs bg-primary-100 text-primary-700 px-2 py-0.5 rounded">{webhook.category}</span>
+                            </div>
+                            <p className="text-secondary-600 text-sm">{webhook.description}</p>
                           </div>
-                          <code className="text-xs bg-gray-100 px-2 py-1 rounded text-primary-700">
+                          <code className="text-xs bg-gray-100 px-2 py-1 rounded text-primary-700 ml-4">
                             POST
                           </code>
                         </div>
