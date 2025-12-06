@@ -15,15 +15,33 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ onClose }) => {
   const { region, setRegion } = useRegion();
   const { currency, setCurrency } = useCurrency();
   
-  const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Flights', path: '/flights' },
-    { name: 'Insurance', path: '/insurance' },
-    { name: 'Loans', path: '/loans' },
-    { name: 'Documents', path: '/documents' },
-    { name: 'Contact', path: '/contact' },
-    { name: 'About Us', path: '/about' },
-  ];
+  const [expandedSection, setExpandedSection] = React.useState<string | null>(null);
+
+  const navigation = {
+    solutions: [
+      { name: 'Travel Insurance', path: '/insurance' },
+      { name: 'Travel Loans', path: '/loans' },
+      { name: 'Document Wallet', path: '/documents' },
+      { name: 'Airline Solutions', path: '/airline-solutions' },
+    ],
+    technology: [
+      { name: 'API Solutions', path: '/api-solutions' },
+      { name: 'AI Solutions', path: '/ai-solutions' },
+    ],
+    developers: [
+      { name: 'API Documentation', path: '/api-docs' },
+      { name: 'SDK Guide', path: '/sdk-guide' },
+      { name: 'Integration Guide', path: '/integration-guide' },
+      { name: 'API Status', path: '/api-status' },
+      { name: 'Changelog', path: '/api-changelog' },
+    ],
+    company: [
+      { name: 'About Us', path: '/about' },
+      { name: 'Careers', path: '/careers' },
+      { name: 'Manpower Services', path: '/manpower' },
+      { name: 'Contact', path: '/contact' },
+    ],
+  };
 
   return (
     <motion.div
@@ -51,27 +69,41 @@ export const MobileMenu: React.FC<MobileMenuProps> = ({ onClose }) => {
           </button>
         </div>
 
-        <nav className="p-4">
-          <ul className="space-y-4">
-            {navigation.map((item) => (
-              <li key={item.name}>
-                <Link
-                  to={item.path}
-                  className={cn(
-                    "block py-2 text-base font-medium hover:text-primary-600",
-                    location.pathname === item.path
-                      ? "text-primary-600"
-                      : "text-secondary-600"
-                  )}
-                  onClick={onClose}
+        <nav className="p-4 overflow-y-auto max-h-[calc(100vh-200px)]">
+          <div className="space-y-2">
+            {Object.entries(navigation).map(([key, items]) => (
+              <div key={key}>
+                <button
+                  onClick={() => setExpandedSection(expandedSection === key ? null : key)}
+                  className="w-full flex items-center justify-between py-2 px-3 text-left font-medium text-secondary-700 hover:bg-primary-50 rounded-lg capitalize"
                 >
-                  {item.name}
-                </Link>
-              </li>
+                  {key}
+                  <span className="text-xs">{expandedSection === key ? '▼' : '▶'}</span>
+                </button>
+                {expandedSection === key && (
+                  <div className="ml-4 mt-1 space-y-1">
+                    {items.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className={cn(
+                          "block py-2 px-3 text-sm rounded-lg",
+                          location.pathname === item.path
+                            ? "bg-primary-100 text-primary-700 font-medium"
+                            : "text-secondary-600 hover:bg-gray-50"
+                        )}
+                        onClick={onClose}
+                      >
+                        {item.name}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
-          </ul>
+          </div>
 
-          <div className="mt-8 space-y-4 border-t pt-4">
+          <div className="mt-4 space-y-4 border-t pt-4">
             {/* Region selector */}
             <div>
               <div className="flex items-center mb-2">
