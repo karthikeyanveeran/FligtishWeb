@@ -9,6 +9,12 @@ import { SwaggerUI } from '../components/SwaggerUI';
 export const ApiDocsPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState('swagger');
   const [apiVersion, setApiVersion] = useState('v3');
+  const [showAuthAlert, setShowAuthAlert] = useState(false);
+
+  const handleUnauthorizedClick = () => {
+    setShowAuthAlert(true);
+    setTimeout(() => setShowAuthAlert(false), 4000);
+  };
 
   const sdks = [
     { name: 'Python', icon: '🐍', version: '3.0.0', download: '/sdks/flightish-python-3.0.0.tar.gz' },
@@ -408,16 +414,35 @@ export const ApiDocsPage: React.FC = () => {
                       Interactive API Explorer - v{apiVersion}
                     </CardTitle>
                     <div className="flex gap-2">
-                      <button className="text-sm px-3 py-1 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors">
+                      <button onClick={handleUnauthorizedClick} className="text-sm px-3 py-1 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors">
                         Download OpenAPI Spec
                       </button>
-                      <button className="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
-                        View Postman Collection
+                      <button onClick={handleUnauthorizedClick} className="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+                        Postman Collection
+                      </button>
+                      <button onClick={handleUnauthorizedClick} className="text-sm px-3 py-1 bg-gray-900 text-white rounded-lg hover:bg-gray-800 transition-colors">
+                        GitHub
                       </button>
                     </div>
                   </div>
                 </CardHeader>
                 <CardContent>
+                  {showAuthAlert && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      className="bg-error-50 border-l-4 border-error-500 rounded-lg p-4 mb-6"
+                    >
+                      <div className="flex items-start gap-3">
+                        <Shield className="h-5 w-5 text-error-600 flex-shrink-0 mt-0.5" />
+                        <div>
+                          <h4 className="font-semibold text-error-900 mb-1">Unauthorized Access</h4>
+                          <p className="text-sm text-error-800">Please sign in or contact our enterprise team at <a href="mailto:corporate@flightishglobal.com" className="underline font-medium">corporate@flightishglobal.com</a> to get API access.</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  )}
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
                     <div className="flex items-start gap-3">
                       <Shield className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
