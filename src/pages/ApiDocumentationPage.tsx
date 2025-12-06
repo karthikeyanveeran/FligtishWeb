@@ -254,7 +254,7 @@ export const ApiDocumentationPage: React.FC = () => {
                                 Base URL
                               </h4>
                               <code className="text-sm bg-white px-2 py-1 rounded">
-                                https://api.laflightish.com
+                                https://api.flightishglobal.com
                               </code>
                             </div>
                             <div className="bg-success-50 p-4 rounded-lg">

@@ -64,19 +64,19 @@ export const Footer: React.FC = () => {
               Your trusted partner for travel insurance, loans, financial services, and cutting-edge AI & API solutions across the US, Australia, and India since 2018.
             </p>
             <div className="flex space-x-4 mb-8">
-              <a href="https://facebook.com/laflightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
+              <a href="https://facebook.com/flightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
                 <FacebookIcon className="h-5 w-5" />
                 <span className="sr-only">Facebook</span>
               </a>
-              <a href="https://twitter.com/laflightish" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
+              <a href="https://twitter.com/flightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
                 <TwitterIcon className="h-5 w-5" />
                 <span className="sr-only">Twitter</span>
               </a>
-              <a href="https://instagram.com/laflightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
+              <a href="https://instagram.com/flightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
                 <InstagramIcon className="h-5 w-5" />
                 <span className="sr-only">Instagram</span>
               </a>
-              <a href="https://linkedin.com/company/laflightish-global" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
+              <a href="https://linkedin.com/company/flightishglobal" target="_blank" rel="noopener noreferrer" className="bg-primary-700 hover:bg-primary-600 p-3 rounded-full text-white transition-colors">
                 <LinkedinIcon className="h-5 w-5" />
                 <span className="sr-only">LinkedIn</span>
               </a>
