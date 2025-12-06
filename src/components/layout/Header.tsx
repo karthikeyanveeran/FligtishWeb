@@ -6,6 +6,7 @@ import { cn } from '../../lib/utils';
 import { useRegion } from '../../context/RegionContext';
 import { useCurrency } from '../../context/CurrencyContext';
 import { Logo } from '../ui/Logo';
+import logoImage from '../../assets/Logo 2.png';
 
 interface HeaderProps {
   toggleMobileMenu: () => void;
@@ -53,7 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-3">
-              <img src="/src/assets/Logo 2.png" alt="LA FLIGHTISH GLOBAL" className="h-10 w-auto" />
+              <img src={logoImage} alt="LA FLIGHTISH GLOBAL" className="h-10 w-auto" />
               <span className="text-xl font-bold text-primary-800 hidden sm:block">
                 LA FLIGHTISH GLOBAL
               </span>
