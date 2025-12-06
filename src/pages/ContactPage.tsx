@@ -63,28 +63,26 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1557804506-669a67965ba0?w=1920')] opacity-10 bg-cover bg-center"></div>
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-900/95 to-accent-900/95"></div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-16">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-white/20 px-3 py-1 rounded-full mb-4 text-sm">
               <CheckCircle className="h-4 w-4" />
-              <span className="text-sm font-medium">Trusted by 500+ Global Enterprises</span>
+              <span>Trusted by 500+ Enterprises</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">Let's Transform Your Business</h1>
-            <p className="text-xl md:text-2xl text-primary-100 mb-8">Connect with our enterprise team for AI solutions and digital innovation</p>
-            <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
-              <div><div className="text-3xl font-bold mb-1">$5B+</div><div className="text-sm text-primary-200">Annual Savings</div></div>
-              <div><div className="text-3xl font-bold mb-1">99.99%</div><div className="text-sm text-primary-200">Uptime SLA</div></div>
-              <div><div className="text-3xl font-bold mb-1">&lt;4hrs</div><div className="text-sm text-primary-200">Response Time</div></div>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">Let's Transform Your Business</h1>
+            <p className="text-lg text-primary-100 mb-6">Connect with our enterprise team for AI solutions and digital innovation</p>
+            <div className="flex justify-center gap-8 text-sm">
+              <div><span className="font-bold text-xl">$5B+</span> Savings</div>
+              <div><span className="font-bold text-xl">99.99%</span> Uptime</div>
+              <div><span className="font-bold text-xl">&lt;4hrs</span> Response</div>
             </div>
           </motion.div>
         </div>
       </section>
 
       {/* Contact Options */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 bg-gray-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
@@ -111,15 +109,15 @@ export const ContactPage: React.FC = () => {
       </section>
 
       {/* Main Contact */}
-      <section className="py-20 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-5 gap-12">
             {/* Sidebar */}
             <motion.div className="lg:col-span-2" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <div className="sticky top-24">
-                <h2 className="text-3xl font-bold text-gray-900 mb-8">Get in Touch</h2>
-                <div className="mb-8">
-                  <label className="text-sm font-semibold text-gray-700 mb-3 block">Select Office</label>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
+                <div className="mb-6">
+                  <label className="text-sm font-semibold text-gray-700 mb-2 block">Select Office</label>
                   <div className="grid grid-cols-1 gap-3">
                     {offices.map((office) => (
                       <button key={office.id} onClick={() => setSelectedOffice(office.id)}
@@ -129,7 +127,7 @@ export const ContactPage: React.FC = () => {
                     ))}
                   </div>
                 </div>
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-8 space-y-6">
+                <div className="bg-gray-50 rounded-xl p-6 space-y-4">
                   <div>
                     <div className="flex items-center gap-3 mb-3">
                       <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center"><MapPin className="h-5 w-5 text-primary-600" /></div>
@@ -157,9 +155,9 @@ export const ContactPage: React.FC = () => {
 
             {/* Form */}
             <motion.div className="lg:col-span-3" initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12 border border-gray-100">
-                <div className="mb-8">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-3">Send us a Message</h2>
+              <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
+                <div className="mb-6">
+                  <h2 className="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
                   <p className="text-gray-600">Response within <strong className="text-primary-600">4 hours</strong>. Urgent: <strong className="text-primary-600">+1 (800) 555-0199</strong></p>
                   <div className="flex flex-wrap gap-2 mt-4">
                     <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">🔒 SOC2</span>
@@ -201,11 +199,11 @@ export const ContactPage: React.FC = () => {
       </section>
 
       {/* Trust Section */}
-      <section className="py-20 bg-gradient-to-br from-primary-50 to-accent-50">
+      <section className="py-12 bg-primary-50">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-6xl mx-auto text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-12">Why Leading Enterprises Choose Us</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">Why Leading Enterprises Choose Us</h2>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               {[
                 { value: '500+', label: 'Airlines & Travel Companies' },
                 { value: '$5B+', label: 'Annual Savings Generated' },
