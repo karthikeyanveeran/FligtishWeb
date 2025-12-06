@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { Layout } from './components/layout/Layout';
 import { HomePage } from './pages/HomePage';
 import { FlightBookingPage } from './pages/FlightBookingPage';
@@ -26,9 +27,10 @@ import { CurrencyProvider } from './context/CurrencyContext';
 
 function App() {
   return (
-    <RegionProvider>
-      <CurrencyProvider>
-        <Layout>
+    <ErrorBoundary>
+      <RegionProvider>
+        <CurrencyProvider>
+          <Layout>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/flights" element={<FlightBookingPage />} />
@@ -52,9 +54,10 @@ function App() {
             <Route path="/integration-guide" element={<IntegrationGuidePage />} />
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
-        </Layout>
-      </CurrencyProvider>
-    </RegionProvider>
+          </Layout>
+        </CurrencyProvider>
+      </RegionProvider>
+    </ErrorBoundary>
   );
 }
 
