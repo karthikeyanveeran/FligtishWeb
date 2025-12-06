@@ -331,14 +331,102 @@ export const ApiDocsPage: React.FC = () => {
           {/* Swagger Tab */}
           {activeTab === 'swagger' && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-6">
+              {/* Quick Start Guide */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <Card className="border-l-4 border-l-primary-600">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
+                        <span className="text-primary-600 font-bold">1</span>
+                      </div>
+                      <h3 className="font-bold text-gray-900">Get API Key</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">Sign up for free API access with 10K requests/month</p>
+                    <code className="text-xs bg-gray-100 px-2 py-1 rounded block">Authorization: Bearer YOUR_KEY</code>
+                  </CardContent>
+                </Card>
+                <Card className="border-l-4 border-l-accent-600">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-accent-100 rounded-lg flex items-center justify-center">
+                        <span className="text-accent-600 font-bold">2</span>
+                      </div>
+                      <h3 className="font-bold text-gray-900">Try Endpoints</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">Test all endpoints directly in the browser below</p>
+                    <code className="text-xs bg-gray-100 px-2 py-1 rounded block">Click "Try it out" button</code>
+                  </CardContent>
+                </Card>
+                <Card className="border-l-4 border-l-success-600">
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="w-10 h-10 bg-success-100 rounded-lg flex items-center justify-center">
+                        <span className="text-success-600 font-bold">3</span>
+                      </div>
+                      <h3 className="font-bold text-gray-900">Integrate</h3>
+                    </div>
+                    <p className="text-sm text-gray-600 mb-3">Copy code samples and integrate into your app</p>
+                    <code className="text-xs bg-gray-100 px-2 py-1 rounded block">View SDKs tab for libraries</code>
+                  </CardContent>
+                </Card>
+              </div>
+
+              {/* API Stats */}
+              <Card className="bg-gradient-to-r from-primary-50 to-accent-50">
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                    <div>
+                      <div className="text-2xl font-bold text-primary-600">45+</div>
+                      <div className="text-sm text-gray-600">Endpoints</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary-600">&lt;50ms</div>
+                      <div className="text-sm text-gray-600">Avg Response</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary-600">99.99%</div>
+                      <div className="text-sm text-gray-600">Uptime</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary-600">10K/min</div>
+                      <div className="text-sm text-gray-600">Rate Limit</div>
+                    </div>
+                    <div>
+                      <div className="text-2xl font-bold text-primary-600">REST+GraphQL</div>
+                      <div className="text-sm text-gray-600">Protocols</div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Swagger UI */}
               <Card>
                 <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    <Code className="h-5 w-5 text-primary-600" />
-                    Interactive API Explorer
-                  </CardTitle>
+                  <div className="flex items-center justify-between">
+                    <CardTitle className="flex items-center gap-2">
+                      <Code className="h-5 w-5 text-primary-600" />
+                      Interactive API Explorer - v{apiVersion}
+                    </CardTitle>
+                    <div className="flex gap-2">
+                      <button className="text-sm px-3 py-1 bg-primary-100 text-primary-700 rounded-lg hover:bg-primary-200 transition-colors">
+                        Download OpenAPI Spec
+                      </button>
+                      <button className="text-sm px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+                        View Postman Collection
+                      </button>
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
+                  <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-6">
+                    <div className="flex items-start gap-3">
+                      <Shield className="h-5 w-5 text-yellow-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <h4 className="font-semibold text-yellow-900 mb-1">Authentication Required</h4>
+                        <p className="text-sm text-yellow-800">Most endpoints require an API key. Click "Authorize" button below and enter your key to test authenticated endpoints.</p>
+                      </div>
+                    </div>
+                  </div>
                   <SwaggerUI />
                 </CardContent>
               </Card>
