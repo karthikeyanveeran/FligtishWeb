@@ -91,6 +91,69 @@ export const AiSolutionsPage: React.FC = () => {
     }
   ];
 
+  const enterpriseAPIs = [
+    {
+      title: "Intelligent Document Processing API",
+      description: "Extract, classify, and validate travel documents, passports, visas, and insurance policies with 99.2% accuracy using computer vision and NLP.",
+      icon: <FileText className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/document-extract", "/v3/ai/document-classify", "/v3/ai/document-validate"],
+      metrics: ["99.2% Accuracy", "<2s Processing", "150+ Document Types"],
+      problems: ["Manual document verification taking 15-20 min per application", "Human error in data extraction (8-12% error rate)", "Compliance risks from missed document expiry dates"],
+      solution: "Automated extraction and validation reduces processing time to <2 seconds with 99.2% accuracy, eliminating manual errors and ensuring compliance.",
+      roi: "$2.8M annual savings for 100K applications/year"
+    },
+    {
+      title: "Fraud Detection & Risk Scoring API",
+      description: "Real-time fraud detection for bookings, insurance claims, and loan applications using behavioral analytics and anomaly detection.",
+      icon: <Brain className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/fraud-detect", "/v3/ai/risk-score", "/v3/ai/anomaly-detect"],
+      metrics: ["96% Fraud Detection", "0.3% False Positives", "Real-time Scoring"],
+      problems: ["$4.5M annual fraud losses", "Manual review bottlenecks (2-3 days)", "High false positive rates (15-20%) causing customer friction"],
+      solution: "ML models analyze 200+ signals in real-time, detecting 96% of fraud with only 0.3% false positives, enabling instant approvals for legitimate customers.",
+      roi: "$3.2M fraud prevention + $1.1M operational savings annually"
+    },
+    {
+      title: "Conversational AI & Virtual Agent API",
+      description: "Multi-lingual AI agents handling customer inquiries, bookings, claims processing, and support across voice, chat, and email channels.",
+      icon: <Bot className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/chat", "/v3/ai/voice", "/v3/ai/intent-classify"],
+      metrics: ["85% Automation Rate", "40+ Languages", "<500ms Response"],
+      problems: ["Customer support costs $8-12 per interaction", "24/7 coverage requiring 3 shifts", "Average wait time 8-12 minutes during peak"],
+      solution: "AI agents handle 85% of inquiries automatically in 40+ languages with <500ms response time, escalating only complex cases to humans.",
+      roi: "$5.6M annual savings on 700K interactions/year"
+    },
+    {
+      title: "Predictive Analytics & Demand Forecasting API",
+      description: "Forecast travel demand, pricing optimization, and inventory management using time-series analysis and external data signals.",
+      icon: <BarChart className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/demand-forecast", "/v3/ai/price-optimize", "/v3/ai/inventory-predict"],
+      metrics: ["94% Forecast Accuracy", "8-12% Revenue Lift", "Real-time Updates"],
+      problems: ["Suboptimal pricing leaving 8-12% revenue on table", "Inventory imbalances causing 15% waste", "Manual forecasting taking 2-3 days per route"],
+      solution: "ML models analyze historical data, seasonality, events, and 50+ external signals to optimize pricing and inventory in real-time.",
+      roi: "$7.2M revenue increase + $1.8M cost reduction annually"
+    },
+    {
+      title: "Personalization & Recommendation Engine API",
+      description: "Hyper-personalized travel recommendations, upsells, and dynamic content using collaborative filtering and deep learning.",
+      icon: <Zap className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/recommend", "/v3/ai/personalize", "/v3/ai/next-best-action"],
+      metrics: ["3.2x CTR Improvement", "22% Conversion Lift", "Real-time Personalization"],
+      problems: ["Generic offers with 0.8% conversion rate", "Missed upsell opportunities (avg $45 per booking)", "High cart abandonment (68%)"],
+      solution: "Deep learning models analyze user behavior, preferences, and context to deliver personalized recommendations with 3.2x higher engagement.",
+      roi: "$4.5M incremental revenue from 15% conversion improvement"
+    },
+    {
+      title: "Sentiment Analysis & Voice of Customer API",
+      description: "Analyze customer feedback, reviews, and social media to extract insights, detect issues, and predict churn using NLP.",
+      icon: <Network className="h-8 w-8 text-primary-600" />,
+      endpoints: ["/v3/ai/sentiment", "/v3/ai/topic-extract", "/v3/ai/churn-predict"],
+      metrics: ["92% Sentiment Accuracy", "Real-time Analysis", "25+ Languages"],
+      problems: ["Manual review of 10K+ monthly reviews taking 40+ hours", "Delayed issue detection (avg 2-3 weeks)", "Customer churn costing $2.5M annually"],
+      solution: "NLP models analyze all feedback in real-time, extracting actionable insights and predicting churn risk to enable proactive retention.",
+      roi: "$1.8M churn reduction + $180K operational savings annually"
+    }
+  ];
+
   const useCases = [
     {
       title: "Intelligent Document Processing",
@@ -287,6 +350,112 @@ export const AiSolutionsPage: React.FC = () => {
                       <h3 className="text-lg font-semibold text-primary-800">{concept.name}</h3>
                     </div>
                     <p className="text-secondary-600">{concept.description}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Enterprise GenAI APIs */}
+      <section className="py-20 bg-gradient-to-br from-primary-900 to-primary-800 text-white">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Enterprise GenAI APIs That Solve Real Problems
+            </h2>
+            <p className="text-lg text-primary-100 max-w-3xl mx-auto">
+              Production-ready APIs with proven ROI, solving critical business challenges in travel and financial services.
+            </p>
+          </motion.div>
+
+          <div className="space-y-8 max-w-6xl mx-auto">
+            {enterpriseAPIs.map((api, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="bg-white/95 backdrop-blur">
+                  <CardContent className="p-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      <div className="lg:col-span-2">
+                        <div className="flex items-start gap-4 mb-6">
+                          <div className="rounded-full bg-primary-50 p-4 flex-shrink-0">
+                            {api.icon}
+                          </div>
+                          <div>
+                            <h3 className="text-2xl font-bold text-primary-800 mb-2">{api.title}</h3>
+                            <p className="text-secondary-600">{api.description}</p>
+                          </div>
+                        </div>
+
+                        <div className="mb-6">
+                          <h4 className="font-semibold text-error-700 mb-3 flex items-center gap-2">
+                            <span className="text-xl">⚠️</span> Problems Solved:
+                          </h4>
+                          <ul className="space-y-2">
+                            {api.problems.map((problem, i) => (
+                              <li key={i} className="flex items-start gap-2 text-secondary-700">
+                                <span className="text-error-600 mt-1">•</span>
+                                <span>{problem}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+
+                        <div className="mb-6">
+                          <h4 className="font-semibold text-success-700 mb-3 flex items-center gap-2">
+                            <CheckCircle className="h-5 w-5" /> Solution:
+                          </h4>
+                          <p className="text-secondary-700">{api.solution}</p>
+                        </div>
+
+                        <div className="bg-success-50 border border-success-200 rounded-lg p-4">
+                          <h4 className="font-semibold text-success-800 mb-1">ROI Impact:</h4>
+                          <p className="text-success-700 text-lg font-bold">{api.roi}</p>
+                        </div>
+                      </div>
+
+                      <div className="lg:col-span-1">
+                        <div className="bg-gray-50 rounded-lg p-6 space-y-6">
+                          <div>
+                            <h4 className="font-semibold text-primary-800 mb-3">API Endpoints:</h4>
+                            <div className="space-y-2">
+                              {api.endpoints.map((endpoint, i) => (
+                                <code key={i} className="block text-xs bg-white px-3 py-2 rounded border border-gray-200 text-primary-700">
+                                  {endpoint}
+                                </code>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div>
+                            <h4 className="font-semibold text-primary-800 mb-3">Key Metrics:</h4>
+                            <div className="space-y-2">
+                              {api.metrics.map((metric, i) => (
+                                <div key={i} className="flex items-center gap-2">
+                                  <CheckCircle className="h-4 w-4 text-success-600" />
+                                  <span className="text-sm text-secondary-700">{metric}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+
+                          <Button variant="primary" fullWidth>
+                            View API Docs
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
                   </CardContent>
                 </Card>
               </motion.div>
