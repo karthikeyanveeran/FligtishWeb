@@ -64,7 +64,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-primary-200 bg-white/90 backdrop-blur-sm">
+    <header className="sticky top-0 z-50 w-full border-b border-gray-800 bg-gray-900/95 backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex-1">
@@ -82,7 +82,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
                 onMouseEnter={() => handleMouseEnter(key)}
                 onMouseLeave={handleMouseLeave}
               >
-                <button className="text-sm font-medium text-secondary-700 hover:text-primary-600 capitalize">
+                <button className="text-sm font-medium text-gray-200 hover:text-primary-400 capitalize">
                   {key}
                 </button>
                 {activeDropdown === key && (
@@ -110,7 +110,7 @@ export const Header: React.FC<HeaderProps> = ({ toggleMobileMenu }) => {
             {/* Mobile menu button */}
             <button
               onClick={toggleMobileMenu}
-              className="inline-flex items-center justify-center rounded-md p-2 text-secondary-600 hover:bg-primary-50 hover:text-primary-600 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 md:hidden"
+              className="inline-flex items-center justify-center rounded-md p-2 text-gray-200 hover:bg-gray-800 hover:text-primary-400 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-primary-500 md:hidden"
             >
               <span className="sr-only">Open main menu</span>
               <Menu className="h-6 w-6" aria-hidden="true" />
