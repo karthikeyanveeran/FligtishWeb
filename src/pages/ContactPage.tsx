@@ -23,7 +23,7 @@ type ContactFormData = z.infer<typeof contactFormSchema>;
 
 export const ContactPage: React.FC = () => {
   const [isSubmitted, setIsSubmitted] = React.useState(false);
-  const [selectedOffice, setSelectedOffice] = React.useState('global');
+
   
   const {
     register,
@@ -53,12 +53,10 @@ export const ContactPage: React.FC = () => {
   ];
 
   const offices = [
-    { id: 'global', name: 'Global HQ', address: 'D142, SBIOA Unity Enclave, Mambakkam, Chennai, India', hours: 'Mon-Fri: 9am-6pm IST' },
-    { id: 'usa', name: 'USA Office', address: '1250 Aviation Blvd, Suite 300, Los Angeles, CA 90045', hours: 'Mon-Fri: 9am-6pm PST' },
-    { id: 'australia', name: 'Australia', address: '85 William Street, Sydney, NSW 2000', hours: 'Mon-Fri: 9am-6pm AEST' },
+    { id: 'global', name: 'Global Headquarters', address: 'D142, SBIOA Unity Enclave, Mambakkam, Chennai, India', hours: 'Mon-Fri: 9am-6pm IST' },
   ];
 
-  const currentOffice = offices.find(o => o.id === selectedOffice) || offices[0];
+  const currentOffice = offices[0];
 
   return (
     <div className="min-h-screen bg-white">
@@ -115,18 +113,7 @@ export const ContactPage: React.FC = () => {
             {/* Sidebar */}
             <motion.div className="lg:col-span-2" initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
               <div className="sticky top-24">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Get in Touch</h2>
-                <div className="mb-6">
-                  <label className="text-sm font-semibold text-gray-700 mb-2 block">Select Office</label>
-                  <div className="grid grid-cols-1 gap-3">
-                    {offices.map((office) => (
-                      <button key={office.id} onClick={() => setSelectedOffice(office.id)}
-                        className={`p-4 rounded-xl text-left font-medium transition-all ${selectedOffice === office.id ? 'bg-primary-600 text-white shadow-lg' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}`}>
-                        {office.name}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Contact Information</h2>
                 <div className="bg-gray-50 rounded-xl p-6 space-y-4">
                   <div>
                     <div className="flex items-center gap-3 mb-3">
@@ -158,7 +145,7 @@ export const ContactPage: React.FC = () => {
               <div className="bg-white rounded-xl shadow-lg p-8 border border-gray-200">
                 <div className="mb-6">
                   <h2 className="text-2xl font-bold text-gray-900 mb-2">Send us a Message</h2>
-                  <p className="text-gray-600">Response within <strong className="text-primary-600">4 hours</strong>. Urgent: <strong className="text-primary-600">+1 (800) 555-0199</strong></p>
+                  <p className="text-gray-600">Our enterprise team responds within <strong className="text-primary-600">4 hours</strong></p>
                   <div className="flex flex-wrap gap-2 mt-4">
                     <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">🔒 SOC2</span>
                     <span className="text-xs bg-gray-100 text-gray-700 px-3 py-1 rounded-full font-medium">✓ GDPR</span>
