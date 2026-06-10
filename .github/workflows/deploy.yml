@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -19,14 +22,16 @@ jobs:
       - run: npm run build
 
       - name: Deploy to Oracle VM
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.ORACLE_VM_HOST }}
-          username: ${{ secrets.ORACLE_VM_USER }}
-          key: ${{ secrets.ORACLE_VM_SSH_KEY }}
-          source: "dist/*"
-          target: "/var/www/flightishglobal.com"
-          strip_components: 1
+        env:
+          SSH_KEY: ${{ secrets.ORACLE_VM_SSH_KEY }}
+          HOST: ${{ secrets.ORACLE_VM_HOST }}
+          USER: ${{ secrets.ORACLE_VM_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts 2>/dev/null
+          rsync -avz --delete dist/ $USER@$HOST:/var/www/flightishglobal.com/
 
       - name: Purge Cloudflare Cache
         if: success()
