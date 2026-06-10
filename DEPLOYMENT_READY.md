@@ -1,111 +1,137 @@
-# Deployment Ready - Build Summary
+# La Flightish Global – Deployment Guide
 
-## ✅ Build Status: SUCCESSFUL
-
-**Build Time:** 7.99 seconds  
-**Bundle Size:** 627.12 kB (176.31 kB gzipped)  
-**Output:** `dist/` folder ready for deployment
-
----
-
-## 🔧 Recent Fixes & Improvements
-
-### 1. **Enterprise Navigation Structure**
-- **Header Navigation:** Reorganized 13+ pages into 4 logical categories
-  - **Solutions:** Travel Insurance, Travel Loans, Document Wallet
-  - **Technology:** API Solutions, AI Solutions, Airline Solutions
-  - **Developers:** API Documentation, SDK Guide, API Changelog, Integration Guide, API Status
-  - **Company:** About Us, Careers, Manpower Augmentation, Contact Us
-
-- **Navbar Centering:** Fixed alignment with flex-1 and justify-center
-- **Dropdown Menus:** Implemented hover-based dropdowns for clean desktop UX
-- **Mobile Menu:** Expandable categories with smooth animations
-
-### 2. **All Pages Fully Wired & Functional**
-✅ Travel Insurance - Dynamic pricing calculator with region/currency support  
-✅ Travel Loans - Loan calculator with flexible terms  
-✅ Document Wallet - Secure storage with 8 document types  
-✅ API Solutions - Enterprise API endpoints and integration process  
-✅ AI Solutions - 6 AI features with tabbed interface  
-✅ Airline Solutions - 4 solution categories with real-world metrics  
-✅ About Us - Company information and values  
-✅ Contact Us - Multi-office contact form with FAQ  
-✅ API Documentation - Swagger UI integration  
-✅ SDK Guide - SDK installation and examples  
-✅ API Changelog - Version history  
-✅ Integration Guide - Integration instructions  
-✅ API Status - System monitoring  
-✅ Manpower Augmentation - Service offerings  
-✅ Careers - Job listings with search/filter  
-✅ Terms of Service - 20 sections with compliance  
-✅ Privacy Policy - 16 sections with GDPR/CCPA  
-✅ 404 Page - Custom error handling
-
-### 3. **Enterprise Features**
-- **Region & Currency Support:** USA/Australia with USD/AUD
-- **Responsive Design:** Mobile-first approach with Tailwind CSS
-- **Animations:** Framer Motion for smooth transitions
-- **Form Validation:** React Hook Form with Zod schemas
-- **SEO:** Helmet for meta tags on all pages
-- **Accessibility:** ARIA labels and semantic HTML
+> **Domain:** flightishglobal.com  
+> **Hosting:** Oracle Cloud Always Free VM + Cloudflare CDN  
+> **CI/CD:** GitHub Actions (auto-deploy on push to `main`)  
+> **Repo:** github.com/karthikeyanveeran/FligtishWeb
 
 ---
 
-## 📦 Deployment Instructions
+## Architecture
 
-### Option 1: Vercel (Recommended)
+```
+GitHub (push to main)
+    ↓
+GitHub Actions (npm ci → npm run build)
+    ↓
+SCP dist/ → Oracle Cloud ARM VM
+    ↓
+Nginx serves static files
+    ↓
+Cloudflare CDN/DNS (proxied)
+    ↓
+Users access flightishglobal.com
+```
+
+**Cost: $0/month** — All free-tier services.
+
+---
+
+## ⚠️ Isolation Notice
+
+This project (La Flightish Global corporate website) is **completely separate** from:
+
+| | This Project | YAY! Platform |
+|---|---|---|
+| Purpose | Company website | Adventure booking platform |
+| Domain | flightishglobal.com | yay.place |
+| Repo | GitHub: FligtishWeb | GitLab: yay-place |
+| Hosting | Oracle VM + Cloudflare | Cloudflare Workers + Pages |
+| CI/CD | GitHub Actions | GitLab CI |
+
+**Do NOT mix infrastructure, secrets, or deployments between these two projects.**
+
+---
+
+## GitHub Secrets Required
+
+Add these in **GitHub → Settings → Secrets → Actions**:
+
+| Secret | Description |
+|--------|-------------|
+| `ORACLE_VM_HOST` | Oracle VM public IP address |
+| `ORACLE_VM_USER` | SSH user (`ubuntu` or `opc`) |
+| `ORACLE_VM_SSH_KEY` | Private SSH key for the VM |
+| `CF_ZONE_ID` | Cloudflare Zone ID for flightishglobal.com |
+| `CF_API_TOKEN` | Cloudflare API token (Zone:Cache Purge permission) |
+
+---
+
+## Oracle VM Setup (One-Time)
+
 ```bash
-npm install -g vercel
-vercel
+# 1. Install Nginx
+sudo apt update && sudo apt install nginx -y
+
+# 2. Create web root
+sudo mkdir -p /var/www/flightishglobal.com
+sudo chown -R $USER:$USER /var/www/flightishglobal.com
+
+# 3. Nginx site config
+sudo tee /etc/nginx/sites-available/flightishglobal.com <<'EOF'
+server {
+    listen 80;
+    listen [::]:80;
+    server_name flightishglobal.com www.flightishglobal.com;
+    root /var/www/flightishglobal.com;
+    index index.html;
+
+    # SPA fallback
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Cache static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff2?)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+}
+EOF
+
+# 4. Enable site
+sudo ln -sf /etc/nginx/sites-available/flightishglobal.com /etc/nginx/sites-enabled/
+sudo rm -f /etc/nginx/sites-enabled/default
+sudo nginx -t && sudo systemctl restart nginx
+
+# 5. Firewall — allow only Cloudflare IPs (recommended)
+# See: https://www.cloudflare.com/ips/
 ```
 
-### Option 2: Netlify
+---
+
+## Cloudflare Setup (One-Time)
+
+1. Add `flightishglobal.com` to Cloudflare (Free plan)
+2. Update nameservers at your registrar to Cloudflare's
+3. DNS Records:
+   - `A` → `flightishglobal.com` → Oracle VM IP (Proxied ☁️)
+   - `CNAME` → `www` → `flightishglobal.com` (Proxied ☁️)
+4. SSL/TLS → Full (Strict)
+5. Install Cloudflare Origin Certificate on Nginx for HTTPS
+6. Enable: Auto Minify, Brotli, Always Use HTTPS, HSTS
+
+---
+
+## Deploying
+
+Automatic on every push to `main`. Manual deploy:
+
 ```bash
-npm install -g netlify-cli
-netlify deploy --prod --dir=dist
-```
-
-### Option 3: AWS S3 + CloudFront
-```bash
-aws s3 sync dist/ s3://your-bucket-name
-```
-
-### Option 4: Docker
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY dist/ .
-EXPOSE 3000
-CMD ["npx", "serve", "-s", ".", "-l", "3000"]
+npm ci && npm run build
+scp -r dist/* user@VM_IP:/var/www/flightishglobal.com/
 ```
 
 ---
 
-## 🔐 Security Checklist
-- ✅ SOC2 Type II Certified
-- ✅ GDPR Compliant
-- ✅ PCI-DSS Level 1
-- ✅ ISO 27001 Certified
-- ✅ Environment variables for sensitive data
-- ✅ HTTPS enforced
-- ✅ CORS configured
-- ✅ Rate limiting ready
+## Build Info
 
----
-
-## 📊 Performance Metrics
-- **Lighthouse Score:** 90+
-- **Core Web Vitals:** All Green
-- **Bundle Size:** 627 kB (optimized)
-- **Gzip Compression:** 176 kB
-- **Response Time:** <100ms
-- **Uptime SLA:** 99.99%
-
----
-
-## 🚀 Ready for Production
-The application is fully tested and ready for deployment to production environments.
-
-**Last Updated:** 2024  
-**Version:** 2.0.0  
-**Status:** Production Ready ✅
+- **Framework:** React 18 + Vite + Tailwind CSS
+- **Output:** `dist/` (static HTML/JS/CSS)
+- **Bundle:** ~627 kB (176 kB gzipped)
+- **Build time:** ~8 seconds
