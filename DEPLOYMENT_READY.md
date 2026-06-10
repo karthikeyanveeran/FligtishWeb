@@ -51,7 +51,7 @@ Add these in **GitHub → Settings → Secrets → Actions**:
 |--------|-------------|
 | `ORACLE_VM_HOST` | Oracle VM public IP address |
 | `ORACLE_VM_USER` | SSH user (`ubuntu` or `opc`) |
-| `ORACLE_VM_SSH_KEY` | Private SSH key for the VM |
+| `ORACLE_VM_SSH_KEY` | Private SSH key for the VM (preferred; workflow also supports legacy `ORACLE_VM_KEY`) |
 | `CF_ZONE_ID` | Cloudflare Zone ID for flightishglobal.com |
 | `CF_API_TOKEN` | Cloudflare API token (Zone:Cache Purge permission) |
 

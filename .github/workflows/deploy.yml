@@ -23,7 +23,7 @@ jobs:
         with:
           host: ${{ secrets.ORACLE_VM_HOST }}
           username: ${{ secrets.ORACLE_VM_USER }}
-          key: ${{ secrets.ORACLE_VM_SSH_KEY }}
+          key: ${{ secrets.ORACLE_VM_SSH_KEY || secrets.ORACLE_VM_KEY }}
           source: "dist/*"
           target: "/var/www/flightishglobal.com"
           strip_components: 1
