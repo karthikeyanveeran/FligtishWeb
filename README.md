@@ -21,6 +21,6 @@ npm run build    # outputs to dist/
 
 ## Deployment
 
-Automatic on push to `main` via GitHub Actions → SCP to Oracle VM → Cloudflare cache purge.
+Automatic on push to `main` via GitHub Actions → rsync to Oracle VM → Cloudflare cache purge.
 
 See [DEPLOYMENT_READY.md](DEPLOYMENT_READY.md) for full setup details.
