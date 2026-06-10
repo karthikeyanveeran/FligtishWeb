@@ -1,27 +1,37 @@
-name: Deploy to Vercel
+name: Deploy to Oracle VM
 
 on:
   push:
-    branches:
-      - main
-      - develop
+    branches: [main]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      
-      - name: Install dependencies
-        run: npm install
-      
-      - name: Build
-        run: npm run build
-      
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
         with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: ./project
+          node-version: 18
+          cache: npm
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Deploy to Oracle VM
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.ORACLE_VM_HOST }}
+          username: ${{ secrets.ORACLE_VM_USER }}
+          key: ${{ secrets.ORACLE_VM_SSH_KEY }}
+          source: "dist/*"
+          target: "/var/www/flightishglobal.com"
+          strip_components: 1
+
+      - name: Purge Cloudflare Cache
+        if: success()
+        run: |
+          curl -s -X POST "https://api.cloudflare.com/client/v4/zones/${{ secrets.CF_ZONE_ID }}/purge_cache" \
+            -H "Authorization: Bearer ${{ secrets.CF_API_TOKEN }}" \
+            -H "Content-Type: application/json" \
+            --data '{"purge_everything":true}'
